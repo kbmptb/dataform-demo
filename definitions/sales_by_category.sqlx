@@ -1,0 +1,18 @@
+config {
+    type: "table",
+    schema: "dataflow_demo_dev",
+    name: "sales_by_category"
+}
+
+SELECT
+  category,
+  SUM(amount) AS total_amount,
+  CASE
+    WHEN SUM(amount) >= 5000 THEN 'Cher'
+    ELSE 'Abordable'
+END
+  AS libelle_prix
+FROM
+  `project-a0c99e7b-8c47-4075-b97.dataflow_demo_dev.orders_enriched`
+GROUP BY
+  category
