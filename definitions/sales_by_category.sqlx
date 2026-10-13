@@ -1,7 +1,14 @@
 config {
     type: "table",
     schema: "dataflow_demo_dev",
-    name: "sales_by_category"
+    name: "sales_by_category",
+    description: "Agrégation des ventes par catégorie avec libellé de prix et date d'exécution.",
+    columns: {
+        category: "Catégorie de produit",
+        total_amount: "Montant total des ventes pour la catégorie",
+        libelle_prix: "Classification du prix (Cher / Abordable)",
+        Date_execution: "Date/heure d'exécution du chargement"
+    }
 }
 
 SELECT
@@ -11,7 +18,8 @@ SELECT
     WHEN SUM(amount) >= 5000 THEN 'Cher'
     ELSE 'Abordable'
 END
-  AS libelle_prix
+  AS libelle_prix,
+  CURRENT_TIMESTAMP() AS Date_execution
 FROM
   `project-a0c99e7b-8c47-4075-b97.dataflow_demo_dev.orders_enriched`
 GROUP BY
